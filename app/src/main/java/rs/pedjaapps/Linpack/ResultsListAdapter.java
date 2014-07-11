@@ -23,7 +23,7 @@ import android.content.*;
 import android.view.*;
 import android.widget.*;
 
-public final class ResultsListAdapter extends ArrayAdapter<ResultsEntry>
+public final class ResultsListAdapter extends ArrayAdapter<Result>
 {
 
 	private final int itemLayoutResource;
@@ -40,10 +40,10 @@ public final class ResultsListAdapter extends ArrayAdapter<ResultsEntry>
 
 		final View view = getWorkingView(convertView);
 		final ViewHolder viewHolder = getViewHolder(view);
-		final ResultsEntry entry = getItem(position);
+		final Result entry = getItem(position);
 
-		viewHolder.mflopsView.setText(entry.getMflops()+"");
-		viewHolder.dateView.setText(entry.getDate());
+		viewHolder.mflopsView.setText(entry.mflops+"");
+		viewHolder.dateView.setText(entry.date + "");
 
 
 		return view;
@@ -51,7 +51,7 @@ public final class ResultsListAdapter extends ArrayAdapter<ResultsEntry>
 
 	private View getWorkingView(final View convertView)
 	{
-		View workingView = null;
+		View workingView;
 
 		if (null == convertView)
 		{
@@ -72,7 +72,7 @@ public final class ResultsListAdapter extends ArrayAdapter<ResultsEntry>
 	private ViewHolder getViewHolder(final View workingView)
 	{
 		final Object tag = workingView.getTag();
-		ViewHolder viewHolder = null;
+		ViewHolder viewHolder;
 
 
 		if (null == tag || !(tag instanceof ViewHolder))

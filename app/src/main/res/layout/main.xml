@@ -27,8 +27,8 @@
                 android:layout_weight="1"
                 android:text="@string/mflops"
                 android:textColor="#000"
-                android:textSize="20sp" />
-"
+                android:textSize="16sp" />
+
 
             <TextView
                 android:id="@+id/mflops"
@@ -50,7 +50,7 @@
                 android:layout_weight="1"
                 android:text="@string/nres"
                 android:textColor="#000"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/nres"
@@ -72,7 +72,7 @@
                 android:layout_weight="1"
                 android:text="@string/time"
                 android:textColor="#000"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/time"
@@ -94,7 +94,7 @@
                 android:layout_weight="1"
                 android:text="@string/precision"
                 android:textColor="#000"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/precision"
@@ -109,27 +109,16 @@
             android:layout_height="wrap_content" >
 
             <Button
+                style="@android:style/Widget.Button.Small"
                 android:id="@+id/start_single"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/button"
                 android:padding="5dp"
                 android:text="@string/start_single"
-                android:textColor="#000"
-                android:layout_weight="1" />
-            <Button
-                android:id="@+id/start_multi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/button"
-                android:padding="5dp"
-                android:text="@string/start_multi"
-                android:textColor="#000"
-                android:layout_weight="1" />
+                android:textColor="#000" />
 
         </LinearLayout>
 

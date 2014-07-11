@@ -70,7 +70,7 @@ double  secs;
 
     
 
-JNIEXPORT jobject JNICALL Java_com_tehnicomsolutions_linpack_app_MainActivity_runLinpack (JNIEnv* env, jobject thiz, jclass resultClass)
+jobject Java_rs_pedjaapps_Linpack_MainActivity_runLinpack (JNIEnv* env, jobject thiz, jclass resultClass)
 {
     __android_log_write (ANDROID_LOG_DEBUG, "linpack-jni.c", "running standard linpack");
         static REAL aa[200*200],a[200*201],b[200],x[200];       
@@ -331,18 +331,12 @@ JNIEXPORT jobject JNICALL Java_com_tehnicomsolutions_linpack_app_MainActivity_ru
     if (jConstructor == NULL)__android_log_write (ANDROID_LOG_ERROR, "linpack-jni.c", "jConstructor is NULL");
     jobject resultObject = (*env)->NewObject (env, resultClass, jConstructor);
     /*mFlops, residn, resid, epsn, x1, x2;*/
-    jfieldID jMFlops = (*env)->GetFieldID (env, resultClass, "mFlops", "D");
-    jfieldID jResidn = (*env)->GetFieldID (env, resultClass, "residn", "D");
-    jfieldID jResid = (*env)->GetFieldID (env, resultClass, "resid", "D");
-    jfieldID jEpsn = (*env)->GetFieldID (env, resultClass, "epsn", "D");
-    jfieldID jX1 = (*env)->GetFieldID (env, resultClass, "x1", "D");
-    jfieldID jX2 = (*env)->GetFieldID (env, resultClass, "x2", "D");
+    jfieldID jMFlops = (*env)->GetFieldID (env, resultClass, "mflops", "D");
+    jfieldID jResidn = (*env)->GetFieldID (env, resultClass, "nres", "D");
+    jfieldID jEpsn = (*env)->GetFieldID (env, resultClass, "precision", "D");
     (*env)->SetDoubleField (env, resultObject, jMFlops, max2);
     (*env)->SetDoubleField (env, resultObject, jResidn, (double) residn);
-    (*env)->SetDoubleField (env, resultObject, jResid, (double) resid);
     (*env)->SetDoubleField (env, resultObject, jEpsn, (double) epsn);
-    (*env)->SetDoubleField (env, resultObject, jX1, (double) x1);
-    (*env)->SetDoubleField (env, resultObject, jX2, (double) x2);
     return resultObject;
 }
 
