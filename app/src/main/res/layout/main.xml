@@ -123,22 +123,6 @@
         </LinearLayout>
 
     </LinearLayout>
-    
-    <LinearLayout
-        android:id="@+id/ad_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
-
-        <com.google.ads.AdView
-            android:id="@+id/ad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            ads:adUnitId="a1516a744648b78"
-            ads:loadAdOnCreate="true"
-            ads:testDevices="TEST_EMULATOR, 3CE20BB714ED336822A2508B26BBC32B" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/results"
@@ -152,7 +136,6 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/ad_layout"
         android:layout_below="@+id/results" >
 
     </ListView>
