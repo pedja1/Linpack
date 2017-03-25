@@ -30,7 +30,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include <android/log.h>
 #include <jni.h>
 
 
@@ -70,9 +69,8 @@ double  secs;
 
     
 
-jobject Java_rs_pedjaapps_Linpack_MainActivity_runLinpack (JNIEnv* env, jobject thiz, jclass resultClass)
+jobject Java_org_skynetsoftware_linpack_MainActivity_runLinpack (JNIEnv* env, jobject thiz, jclass resultClass)
 {
-    __android_log_write (ANDROID_LOG_DEBUG, "linpack-jni.c", "running standard linpack");
         static REAL aa[200*200],a[200*201],b[200],x[200];       
         REAL cray,ops,total,norma,normx;
         REAL resid,residn,eps,tm2,epsn,x1,x2;
@@ -328,7 +326,6 @@ jobject Java_rs_pedjaapps_Linpack_MainActivity_runLinpack (JNIEnv* env, jobject 
 
     
     jmethodID jConstructor = (*env)->GetMethodID (env, resultClass, "<init>", "()V");
-    if (jConstructor == NULL)__android_log_write (ANDROID_LOG_ERROR, "linpack-jni.c", "jConstructor is NULL");
     jobject resultObject = (*env)->NewObject (env, resultClass, jConstructor);
     /*mFlops, residn, resid, epsn, x1, x2;*/
     jfieldID jMFlops = (*env)->GetFieldID (env, resultClass, "mflops", "D");

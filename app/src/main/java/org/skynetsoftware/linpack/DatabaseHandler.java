@@ -1,4 +1,4 @@
-package rs.pedjaapps.Linpack;
+package org.skynetsoftware.linpack;
 
 import android.content.ContentValues;
 import android.content.Context;

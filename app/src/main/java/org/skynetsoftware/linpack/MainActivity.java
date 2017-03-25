@@ -1,4 +1,4 @@
-package rs.pedjaapps.Linpack;
+package org.skynetsoftware.linpack;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -22,23 +21,20 @@ import java.util.List;
 
 public class MainActivity extends Activity implements Runnable
 {
+    private static final DecimalFormat MFLOPS_FORMAT = new DecimalFormat("0.000");
+    private static final DecimalFormat NRES_FORMAT = new DecimalFormat("0.00");
 
-    TextView mflopsTextView;
-    TextView nresTextView;
-    TextView timeTextView;
-    TextView precisionTextView;
-    ListView resultsList;
-    ResultsListAdapter adapter;
-    DatabaseHandler db;
-    Button start_single;
-    Handler linpackHandler;
-    Handler uiHandler;
+    private TextView mflopsTextView;
+    private TextView nresTextView;
+    private TextView timeTextView;
+    private TextView precisionTextView;
+    private ResultsListAdapter adapter;
+    private DatabaseHandler db;
+    private Button start_single;
+    private Handler linpackHandler;
+    private Handler uiHandler;
 
     private long startTime;
-
-    final DecimalFormat mflopsFormat = new DecimalFormat("0.000");
-    final DecimalFormat nResFormat = new DecimalFormat("0.00");
-    SimpleDateFormat f = new SimpleDateFormat("dd MMM yy HH:mm:ss");
 
     /**
      * Called when the activity is first created.
@@ -52,7 +48,7 @@ public class MainActivity extends Activity implements Runnable
         uiHandler = new Handler();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
 
         mflopsTextView = (TextView) findViewById(R.id.mflops);
         nresTextView = (TextView) findViewById(R.id.nres);
@@ -72,8 +68,8 @@ public class MainActivity extends Activity implements Runnable
                 startLinpack();
             }
         });
-        resultsList = (ListView) findViewById(R.id.list);
-        adapter = new ResultsListAdapter(this, R.layout.results_row);
+        ListView resultsList = (ListView) findViewById(R.id.list);
+        adapter = new ResultsListAdapter(this);
         resultsList.setAdapter(adapter);
         db = new DatabaseHandler(this);
         populateList();
@@ -92,7 +88,7 @@ public class MainActivity extends Activity implements Runnable
                 TextView precisionTextView = (TextView) view.findViewById(R.id.precision);
                 Result e = db.getResultByDate(adapter.getItem(position).date);
 
-                mflopsTextView.setText(e.mflops + "");
+                mflopsTextView.setText(String.valueOf(e.mflops));
                 if (e.mflops < 30)
                 {
                     mflopsTextView.setTextColor(Color.RED);
@@ -101,7 +97,7 @@ public class MainActivity extends Activity implements Runnable
                 {
                     mflopsTextView.setTextColor(Color.GREEN);
                 }
-                nresTextView.setText(e.nres + "");
+                nresTextView.setText(String.valueOf(e.nres));
                 if (e.nres > 5)
                 {
                     nresTextView.setTextColor(Color.YELLOW);
@@ -114,8 +110,8 @@ public class MainActivity extends Activity implements Runnable
                 {
                     nresTextView.setTextColor(Color.GREEN);
                 }
-                timeTextView.setText(e.time + "s");
-                precisionTextView.setText("" + e.precision);
+                timeTextView.setText(String.valueOf(e.time));
+                precisionTextView.setText(String.valueOf(e.precision));
 
                 builder.setNegativeButton(getResources().getString(R.string.close), null);
 
@@ -137,7 +133,7 @@ public class MainActivity extends Activity implements Runnable
         adapter.clear();
         List<Result> results = db.getAllResults();
         Collections.reverse(results);
-        for(Result r : results)
+        for (Result r : results)
         {
             adapter.add(r);
         }
@@ -164,19 +160,19 @@ public class MainActivity extends Activity implements Runnable
                 result.time = System.currentTimeMillis() - startTime;
                 startTime = 0;
                 result.date = new Date();
-                result.mflops = Double.parseDouble(mflopsFormat.format(result.mflops));
-                result.nres = Double.parseDouble(nResFormat.format(result.nres));
+                result.mflops = Double.parseDouble(MFLOPS_FORMAT.format(result.mflops));
+                result.nres = Double.parseDouble(NRES_FORMAT.format(result.nres));
 
                 db.addResult(result);
 
-                mflopsTextView.setText(result.mflops + "");
+                mflopsTextView.setText(String.valueOf(result.mflops));
                 mflopsTextView.setTextColor(result.mflops < 200 ? Color.RED : Color.GREEN);
-                nresTextView.setText(result.nres + "");
-                if(result.nres > 5)
+                nresTextView.setText(String.valueOf(result.nres));
+                if (result.nres > 5)
                 {
                     nresTextView.setTextColor(Color.YELLOW);
                 }
-                else if(result.nres > 10)
+                else if (result.nres > 10)
                 {
                     nresTextView.setTextColor(Color.RED);
                 }
@@ -185,7 +181,7 @@ public class MainActivity extends Activity implements Runnable
                     nresTextView.setTextColor(Color.GREEN);
                 }
                 timeTextView.setText(result.time / 1000 + "s");
-                precisionTextView.setText(result.precision + "");
+                precisionTextView.setText(String.valueOf(result.precision));
                 populateList();
                 start_single.setEnabled(true);
             }
