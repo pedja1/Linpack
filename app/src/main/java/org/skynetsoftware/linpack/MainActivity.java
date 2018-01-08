@@ -157,7 +157,7 @@ public class MainActivity extends Activity implements Runnable
             @Override
             public void run()
             {
-                result.time = System.currentTimeMillis() - startTime;
+                result.time = System.currentTimeMillis() - (double)startTime;
                 startTime = 0;
                 result.date = new Date();
                 result.mflops = Double.parseDouble(MFLOPS_FORMAT.format(result.mflops));

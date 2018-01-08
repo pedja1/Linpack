@@ -97,20 +97,22 @@ public class DatabaseHandler extends SQLiteOpenHelper
 
                 }, filds[0] + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
-        if (cursor != null)
+        if (cursor != null) {
             cursor.moveToFirst();
 
-        Result entry = new Result();
-        entry.id = cursor.getInt(0);
-        entry.mflops = cursor.getDouble(1);
-        entry.nres = cursor.getDouble(2);
-        entry.time = cursor.getDouble(3);
-        entry.precision = cursor.getDouble(4);
-        entry.date = new Date(cursor.getLong(5));
-        // return list
-        db.close();
-        cursor.close();
-        return entry;
+            Result entry = new Result();
+            entry.id = cursor.getInt(0);
+            entry.mflops = cursor.getDouble(1);
+            entry.nres = cursor.getDouble(2);
+            entry.time = cursor.getDouble(3);
+            entry.precision = cursor.getDouble(4);
+            entry.date = new Date(cursor.getLong(5));
+            // return list
+            db.close();
+            cursor.close();
+            return entry;
+        }
+        return null;
     }
 
     public Result getResultByDate(Date date)
@@ -127,20 +129,22 @@ public class DatabaseHandler extends SQLiteOpenHelper
 
                 }, filds[5] + "=?",
                 new String[]{date.getTime() + ""}, null, null, null, null);
-        if (cursor != null)
+        if (cursor != null) {
             cursor.moveToFirst();
 
-        Result entry = new Result();
-        entry.id = cursor.getInt(0);
-        entry.mflops = cursor.getDouble(1);
-        entry.nres = cursor.getDouble(2);
-        entry.time = cursor.getDouble(3);
-        entry.precision = cursor.getDouble(4);
-        entry.date = new Date(cursor.getLong(5));
-        // return list
-        db.close();
-        cursor.close();
-        return entry;
+            Result entry = new Result();
+            entry.id = cursor.getInt(0);
+            entry.mflops = cursor.getDouble(1);
+            entry.nres = cursor.getDouble(2);
+            entry.time = cursor.getDouble(3);
+            entry.precision = cursor.getDouble(4);
+            entry.date = new Date(cursor.getLong(5));
+            // return list
+            db.close();
+            cursor.close();
+            return entry;
+        }
+        return null;
     }
 
     public List<Result> getAllResults()

@@ -25,3 +25,6 @@ lint.xml
 *.iws
 *.eml
 /.idea
+.externalNativeBuild
+build/
+.gradle
