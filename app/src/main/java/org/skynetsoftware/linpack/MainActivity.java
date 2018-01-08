@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -48,6 +50,7 @@ public class MainActivity extends Activity implements Runnable
         uiHandler = new Handler();
 
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         mflopsTextView = (TextView) findViewById(R.id.mflops);
