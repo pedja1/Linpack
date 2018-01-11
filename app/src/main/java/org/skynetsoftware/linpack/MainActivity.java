@@ -12,20 +12,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
-import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends Activity implements Runnable
 {
-    private static final DecimalFormat MFLOPS_FORMAT = new DecimalFormat("0.000");
-    private static final DecimalFormat NRES_FORMAT = new DecimalFormat("0.00");
-
     private TextView mflopsTextView;
     private TextView nresTextView;
     private TextView timeTextView;
@@ -50,15 +44,14 @@ public class MainActivity extends Activity implements Runnable
         uiHandler = new Handler();
 
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
-        mflopsTextView = (TextView) findViewById(R.id.mflops);
-        nresTextView = (TextView) findViewById(R.id.nres);
-        timeTextView = (TextView) findViewById(R.id.time);
-        precisionTextView = (TextView) findViewById(R.id.precision);
+        mflopsTextView = findViewById(R.id.mflops);
+        nresTextView = findViewById(R.id.nres);
+        timeTextView = findViewById(R.id.time);
+        precisionTextView = findViewById(R.id.precision);
 
-        start_single = (Button) findViewById(R.id.start_single);
+        start_single = findViewById(R.id.start_single);
         start_single.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View p1)
@@ -71,7 +64,7 @@ public class MainActivity extends Activity implements Runnable
                 startLinpack();
             }
         });
-        ListView resultsList = (ListView) findViewById(R.id.list);
+        ListView resultsList = findViewById(R.id.list);
         adapter = new ResultsListAdapter(this);
         resultsList.setAdapter(adapter);
         db = new DatabaseHandler(this);
@@ -85,10 +78,10 @@ public class MainActivity extends Activity implements Runnable
 
                 LayoutInflater inflater = getLayoutInflater();
                 View view = inflater.inflate(R.layout.result_dialog_layout, null);
-                TextView mflopsTextView = (TextView) view.findViewById(R.id.mflops);
-                TextView nresTextView = (TextView) view.findViewById(R.id.nres);
-                TextView timeTextView = (TextView) view.findViewById(R.id.time);
-                TextView precisionTextView = (TextView) view.findViewById(R.id.precision);
+                TextView mflopsTextView = view.findViewById(R.id.mflops);
+                TextView nresTextView = view.findViewById(R.id.nres);
+                TextView timeTextView = view.findViewById(R.id.time);
+                TextView precisionTextView = view.findViewById(R.id.precision);
                 Result e = db.getResultByDate(adapter.getItem(position).date);
 
                 mflopsTextView.setText(String.valueOf(e.mflops));
@@ -163,14 +156,12 @@ public class MainActivity extends Activity implements Runnable
                 result.time = System.currentTimeMillis() - (double)startTime;
                 startTime = 0;
                 result.date = new Date();
-                result.mflops = Double.parseDouble(MFLOPS_FORMAT.format(result.mflops));
-                result.nres = Double.parseDouble(NRES_FORMAT.format(result.nres));
 
                 db.addResult(result);
 
-                mflopsTextView.setText(String.valueOf(result.mflops));
+                mflopsTextView.setText(String.format(Locale.US, "%.3f", result.mflops));
                 mflopsTextView.setTextColor(result.mflops < 200 ? Color.RED : Color.GREEN);
-                nresTextView.setText(String.valueOf(result.nres));
+                nresTextView.setText(String.format(Locale.US, "%.2f", result.nres));
                 if (result.nres > 5)
                 {
                     nresTextView.setTextColor(Color.YELLOW);

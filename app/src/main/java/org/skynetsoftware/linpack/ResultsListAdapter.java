@@ -23,6 +23,8 @@ import android.content.*;
 import android.view.*;
 import android.widget.*;
 
+import java.util.Locale;
+
 final class ResultsListAdapter extends ArrayAdapter<Result>
 {
     ResultsListAdapter(final Context context)
@@ -38,7 +40,7 @@ final class ResultsListAdapter extends ArrayAdapter<Result>
         final ViewHolder viewHolder = getViewHolder(view);
         final Result entry = getItem(position);
 
-        viewHolder.mflopsView.setText(String.valueOf(entry.mflops));
+        viewHolder.mflopsView.setText(String.format(Locale.US, "%.3f", entry.mflops));
         viewHolder.dateView.setText(String.valueOf(entry.date));
 
 
